@@ -1,5 +1,5 @@
 var express = require("express");
- var bodyParser = require("body-parser");
+var bodyParser = require("body-parser");
  var DataStore = require("nedb");
 
  var PORT = 3000;
@@ -12,8 +12,9 @@ var express = require("express");
  app.use(bodyParser.json());
 
  var initialcontratos = [
-    {"No.Candidato": 1, "Nombre": "Maria" ,"Apellido": "Soto", 
-    "Puesto":"Investigadora", "Categoria":"Gerente", "Tipo de contrato":"Indeterminado","Sueldo":100,"No.Contrato":1,
+
+    {"NoCandidato": 1, "Nombre": "Maria" ,"Apellido": "Soto", 
+    "Puesto":"Investigadora", "Categoria":"Gerente", "Tipo de contrato":"Indeterminado","Sueldo":100,"NoContrato":1,
     "Fecha Inicio":"09-01-2019", "Fecha Fin":"09-03-2019"}
  ];
 
@@ -87,7 +88,7 @@ var express = require("express");
  });
 
 
- app.post(BASE_API_PATH + "/contratos/:name", (req, res) => {
+ app.post(BASE_API_PATH + "/contratos/:NoCandidato", (req, res) => {
      // Forbidden
      console.log(Date()+" - POST /contratos");
 
@@ -96,12 +97,12 @@ var express = require("express");
 
 
 
- app.get(BASE_API_PATH + "/contratos/:name", (req, res) => {
+ app.get(BASE_API_PATH + "/contratos/:NoCandidato", (req, res) => {
      // Get a single contrato
-     var name = req.params.name;
-     console.log(Date()+" - GET /contratos/"+name);
+     var NoCandidato = req.params.NoCandidato;
+     console.log(Date()+" - GET /contratos/"+NoCandidato);
 
-     db.find({"name": name},(err,contratos)=>{
+     db.find({"NoCandidato": NoCandidato},(err,contratos)=>{
          if(err){
              console.error("Error accesing DB");
              res.sendStatus(500);
@@ -118,12 +119,12 @@ var express = require("express");
  });
 
 
- app.delete(BASE_API_PATH + "/contratos/:name", (req, res) => {
+ app.delete(BASE_API_PATH + "/contratos/:NoCandidato", (req, res) => {
      // Delete a single contrato
-     var name = req.params.name;
-     console.log(Date()+" - DELETE /contratos/"+name);
+     var NoCandidato = req.params.NoCandidato;
+     console.log(Date()+" - DELETE /contratos/"+NoCandidato);
 
-     db.remove({"name": name},{},(err,numRemoved)=>{
+     db.remove({"NoCandidato": NoCandidato},{},(err,numRemoved)=>{
          if(err){
              console.error("Error accesing DB");
              res.sendStatus(500);
@@ -139,11 +140,11 @@ var express = require("express");
      });
  });
 
- app.put(BASE_API_PATH + "/contratos/:name", (req, res) => {
+ app.put(BASE_API_PATH + "/contratos/:NoCandidato", (req, res) => {
      // Update contrato
-     var name = req.params.name;
+     var NoCandidato = req.params.NoCandidato;
      var updatedcontrato = req.body;
-     console.log(Date()+" - PUT /contratos/"+name);
+     console.log(Date()+" - PUT /contratos/"+NoCandidato);
 
      if(name != updatedcontrato.name){
          res.sendStatus(409);
